@@ -1,10 +1,10 @@
-package pl.mcx.lombok.academy.db;
+package pl.mcx.lombok.academy.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
-    List<Employee> findByLastName(String lastName);
+    Optional<Employee> findById(Long id);
 }

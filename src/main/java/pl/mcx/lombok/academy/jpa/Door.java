@@ -1,24 +1,23 @@
-package pl.mcx.lombok.academy.db;
+package pl.mcx.lombok.academy.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Doors {
+public class Door {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String number;
+    @OneToMany(mappedBy = "door")
     private Set<AccessVersion> accessVersions;
 
-    public Doors() {
+    private String number;
+
+    public Door() {
     }
 
-    public Doors(final String number) {
+    public Door(final String number) {
         this.number = number;
     }
 
@@ -47,9 +46,9 @@ public class Doors {
             return false;
         }
 
-        final Doors doors = (Doors) o;
+        final Door door = (Door) o;
 
-        return !(number != null ? !number.equals(doors.number) : doors.number != null);
+        return !(number != null ? !number.equals(door.number) : door.number != null);
     }
 
     @Override
@@ -62,5 +61,9 @@ public class Doors {
         return "Doors{" +
                 "number='" + number + '\'' +
                 '}';
+    }
+
+    public static DoorBuilder builder() {
+        return new DoorBuilder();
     }
 }

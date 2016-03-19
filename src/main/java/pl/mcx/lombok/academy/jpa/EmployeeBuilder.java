@@ -1,4 +1,4 @@
-package pl.mcx.lombok.academy.db;
+package pl.mcx.lombok.academy.jpa;
 
 public class EmployeeBuilder {
 

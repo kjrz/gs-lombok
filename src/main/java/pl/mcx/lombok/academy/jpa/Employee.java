@@ -1,9 +1,6 @@
-package pl.mcx.lombok.academy.db;
+package pl.mcx.lombok.academy.jpa;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
@@ -12,9 +9,11 @@ public class Employee {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @OneToMany(mappedBy = "employee")
+    private Set<AccessVersion> accessVersions;
+
     private String firstName;
     private String lastName;
-    private Set<AccessVersion> accessVersions;
 
     protected Employee() {
     }
@@ -83,5 +82,9 @@ public class Employee {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';
+    }
+
+    public static EmployeeBuilder builder() {
+        return new EmployeeBuilder();
     }
 }
