@@ -1,6 +1,7 @@
 package pl.mcx.lombok.academy.jpa;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 
 @Entity
 public class AccessVersion extends Version {
@@ -19,7 +20,8 @@ public class AccessVersion extends Version {
     public AccessVersion() {
     }
 
-    public AccessVersion(final Door door, final Employee employee) {
+    public AccessVersion(final Door door, final Employee employee, final ZonedDateTime endValidTime) {
+        super(endValidTime);
         this.door = door;
         this.employee = employee;
     }
