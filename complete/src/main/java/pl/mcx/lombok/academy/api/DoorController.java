@@ -1,7 +1,6 @@
 package pl.mcx.lombok.academy.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/door/{doorId}/access/{employeeId}")
+@Slf4j
 public final class DoorController {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DoorController.class);
 
     private static final String LOCATION_TEMPLATE = "/door/%s/access/%s";
 
