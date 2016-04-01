@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @ToString(exclude = "accessVersions")
-@EqualsAndHashCode(exclude = "accessVersions")
+@EqualsAndHashCode(exclude = {"accessVersions", "teams"})
 public class Employee {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +19,9 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee")
     private Set<AccessVersion> accessVersions;
+
+    @ManyToMany
+    private Set<Team> teams;
 
     private String firstName;
     private String lastName;

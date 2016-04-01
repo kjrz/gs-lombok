@@ -13,7 +13,7 @@ public class Application {
 
     @Bean
     public CommandLineRunner populate(final EmployeeRepository employees, final DoorRepository doors,
-                                      final AccessVersionRepository access) {
+                                      final AccessVersionRepository access, final TeamRepository teams) {
         return (args) -> {
             final Door door = doors.save(Door.builder().number("678A").build());
             final Employee tom = employees.save(Employee.builder().firstName("Tom").lastName("Sand").build());
@@ -22,7 +22,11 @@ public class Application {
                     .build());
 
             employees.save(Employee.builder().firstName("Paul").lastName("Jackson").build());
-            employees.save(Employee.builder().firstName("Martin").lastName("Chekhov").build());
+            final Employee martin = employees.save(Employee.builder().firstName("Martin").lastName("Chekhov").build());
+
+            final Team teamA = Team.builder().name("A").employee(tom).build();
+            teamA.getEmployees().add(martin);
+            teams.save(teamA);
         };
     }
 

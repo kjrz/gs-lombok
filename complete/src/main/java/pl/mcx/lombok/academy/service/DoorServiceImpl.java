@@ -1,5 +1,6 @@
 package pl.mcx.lombok.academy.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.mcx.lombok.academy.jpa.*;
@@ -8,6 +9,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public final class DoorServiceImpl implements DoorService {
 
     private final DoorRepository doorRepository;
@@ -55,6 +57,13 @@ public final class DoorServiceImpl implements DoorService {
         getEmployee(employeeId); // throws NoSuchEmployeeException
     }
 
+    private Optional<AccessVersion> getActiveAccess(final Long doorId, final Long employeeId) {
+        Optional<AccessVersion> activeAccess = accessVersionRepository.findActiveAccess(doorId, employeeId,
+                ZonedDateTime.now());
+        activeAccess.map(Object::toString).ifPresent(LOG::info);
+        return activeAccess;
+    }
+
     private Door getDoor(final Long doorId) {
         return doorRepository.findById(doorId)
                 .orElseThrow(() -> new NoSuchDoorException("No door with id=" + doorId));
@@ -63,10 +72,6 @@ public final class DoorServiceImpl implements DoorService {
     private Employee getEmployee(final Long employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new NoSuchEmployeeException("No employee with id=" + employeeId));
-    }
-
-    private Optional<AccessVersion> getActiveAccess(final Long doorId, final Long employeeId) {
-        return accessVersionRepository.findActiveAccess(doorId, employeeId, ZonedDateTime.now());
     }
 
     private void deactivateVersion(final AccessVersion access) {
